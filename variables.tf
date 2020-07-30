@@ -29,14 +29,14 @@ variable "oidc_url" {
 
 variable "node_tolerations" {
   description = "CSI driver node tolerations"
-  type        = map(string)
-  default     = {}
+  type        = list(map(string))
+  default     = [{}]
 }
 
 variable "csi_controller_tolerations" {
   description = "CSI driver controller tolerations"
-  type        = map(string)
-  default     = {}
+  type        = list(map(string))
+  default     = [{}]
 }
 
 variable "csi_controller_replica_count" {

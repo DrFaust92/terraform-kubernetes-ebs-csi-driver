@@ -13,6 +13,7 @@ resource "kubernetes_cluster_role" "provisioner" {
   metadata {
     name = "ebs-external-provisioner-role"
   }
+
   rule {
     api_groups = [""]
     resources  = ["persistentvolumes"]

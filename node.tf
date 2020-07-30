@@ -1,24 +1,23 @@
-locals {
-  daemonset_name = "ebs-csi-node"
-}
-
 resource "kubernetes_daemonset" "node" {
   metadata {
     name      = local.daemonset_name
     namespace = var.namespace
   }
+
   spec {
     selector {
       match_labels = {
         app = local.daemonset_name
       }
     }
+
     template {
       metadata {
         labels = {
           app = local.daemonset_name
         }
       }
+
       spec {
         affinity {
           node_affinity {
@@ -59,9 +58,6 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name = "ebs-plugin"
-          security_context {
-            privileged = true
-          }
           image = "amazon/aws-ebs-csi-driver:v0.5.0"
           args = [
             "node",
@@ -69,33 +65,44 @@ resource "kubernetes_daemonset" "node" {
             "--logtostderr",
             "--v=5"
           ]
+
+          security_context {
+            privileged = true
+          }
+
           env {
             name  = "CSI_ENDPOINT"
             value = "unix:/csi/csi.sock"
           }
+
           volume_mount {
             mount_path        = "/var/lib/kubelet"
             name              = "kubelet-dir"
             mount_propagation = "Bidirectional"
           }
+
           volume_mount {
             mount_path = "/csi"
             name       = "plugin-dir"
           }
+
           volume_mount {
             name       = "device-dir"
             mount_path = "/dev"
           }
+
           port {
             name           = "healthz"
             container_port = 9808
             protocol       = "TCP"
           }
+
           liveness_probe {
             http_get {
               path = "/healthz"
               port = "healthz"
             }
+
             initial_delay_seconds = 10
             timeout_seconds       = 3
             period_seconds        = 10
@@ -111,6 +118,7 @@ resource "kubernetes_daemonset" "node" {
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
             "--v=5"
           ]
+
           lifecycle {
             pre_stop {
               exec {
@@ -118,18 +126,22 @@ resource "kubernetes_daemonset" "node" {
               }
             }
           }
+
           env {
             name  = "ADDRESS"
             value = "/csi/csi.sock"
           }
+
           env {
             name  = "DRIVER_REG_SOCK_PATH"
             value = "/var/lib/kubelet/plugins/ebs.csi.aws.com/csi.sock"
           }
+
           volume_mount {
             mount_path = "/csi"
             name       = "plugin-dir"
           }
+
           volume_mount {
             mount_path = "/registration"
             name       = "registration-dir"
@@ -142,14 +154,64 @@ resource "kubernetes_daemonset" "node" {
           args = [
             "--csi-address=/csi/csi.sock"
           ]
+
           volume_mount {
             mount_path = "/csi"
             name       = "plugin-dir"
           }
         }
 
+        dynamic "container" {
+          for_each = local.resizer_container
+
+          content {
+            name  = lookup(container.value, "name", null)
+            image = lookup(container.value, "image", null)
+
+            args = [
+              "--csi-address=$(ADDRESS)",
+              "--v=5"
+            ]
+
+            env {
+              name  = "ADDRESS"
+              value = "/var/lib/csi/sockets/pluginproxy/csi.sock"
+            }
+
+            volume_mount {
+              mount_path = "/var/lib/csi/sockets/pluginproxy/"
+              name       = "socket-dir"
+            }
+          }
+        }
+
+        dynamic "container" {
+          for_each = local.snapshot_container
+
+          content {
+            name  = lookup(container.value, "name", null)
+            image = lookup(container.value, "image", null)
+
+            args = [
+              "--csi-address=$(ADDRESS)",
+              "--leader-election=true"
+            ]
+
+            env {
+              name  = "ADDRESS"
+              value = "/var/lib/csi/sockets/pluginproxy/csi.sock"
+            }
+
+            volume_mount {
+              mount_path = "/var/lib/csi/sockets/pluginproxy/"
+              name       = "socket-dir"
+            }
+          }
+        }
+
         volume {
           name = "kubelet-dir"
+
           host_path {
             path = "/var/lib/kubelet"
             type = "Directory"
@@ -158,6 +220,7 @@ resource "kubernetes_daemonset" "node" {
 
         volume {
           name = "plugin-dir"
+
           host_path {
             path = "/var/lib/kubelet/plugins/ebs.csi.aws.com/"
             type = "DirectoryOrCreate"
@@ -166,6 +229,7 @@ resource "kubernetes_daemonset" "node" {
 
         volume {
           name = "registration-dir"
+
           host_path {
             path = "/var/lib/kubelet/plugins_registry/"
             type = "Directory"
@@ -174,6 +238,7 @@ resource "kubernetes_daemonset" "node" {
 
         volume {
           name = "device-dir"
+
           host_path {
             path = "/dev"
             type = "Directory"

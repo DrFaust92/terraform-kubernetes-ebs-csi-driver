@@ -1,26 +1,24 @@
-locals {
-  tags = join(",", [for key, value in var.tags : "${key}=${value}"])
-  name = "ebs-csi-controller"
-}
-
 resource "kubernetes_deployment" "ebs_csi_controller" {
   metadata {
-    name      = local.name
+    name      = local.controller_name
     namespace = var.namespace
   }
   spec {
     replicas = var.csi_controller_replica_count
+
     selector {
       match_labels = {
-        app = local.name
+        app = local.controller_name
       }
     }
+
     template {
       metadata {
         labels = {
-          app = local.name
+          app = local.controller_name
         }
       }
+
       spec {
         node_selector = {
           "beta.kubernetes.io/os" : "linux",
@@ -53,26 +51,31 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             "--endpoint=$(CSI_ENDPOINT)",
             "--logtostderr",
             "--v=5",
-            "--extra-volume-tags=${local.tags}"
+            "--extra-volume-tags=${local.csi_volume_tags}"
           ]
+
           env {
             name  = "CSI_ENDPOINT"
             value = "unix:///var/lib/csi/sockets/pluginproxy/csi.sock"
           }
+
           volume_mount {
             mount_path = "/var/lib/csi/sockets/pluginproxy/"
             name       = "socket-dir"
           }
+
           port {
             name           = "healthz"
             container_port = 9808
             protocol       = "TCP"
           }
+
           liveness_probe {
             http_get {
               path = "/healthz"
               port = "healthz"
             }
+
             initial_delay_seconds = 10
             timeout_seconds       = 3
             period_seconds        = 10
@@ -90,10 +93,12 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             "--enable-leader-election",
             "--leader-election-type=leases"
           ]
+
           env {
             name  = "ADDRESS"
             value = "/var/lib/csi/sockets/pluginproxy/csi.sock"
           }
+
           volume_mount {
             mount_path = "/var/lib/csi/sockets/pluginproxy/"
             name       = "socket-dir"
@@ -109,10 +114,12 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             "--leader-election=true",
             "--leader-election-type=leases"
           ]
+
           env {
             name  = "ADDRESS"
             value = "/var/lib/csi/sockets/pluginproxy/csi.sock"
           }
+
           volume_mount {
             mount_path = "/var/lib/csi/sockets/pluginproxy/"
             name       = "socket-dir"
@@ -125,6 +132,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
           args = [
             "--csi-address=/csi/csi.sock"
           ]
+
           volume_mount {
             mount_path = "/csi"
             name       = "socket-dir"
