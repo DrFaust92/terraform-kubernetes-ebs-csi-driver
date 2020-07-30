@@ -34,7 +34,8 @@ provider "kubernetes" {
 }
 
 module "ebs_csi_driver_controller" {
-  source = "TBD"
+  source = "DrFaust92/ebs-csi-driver/kubernetes"
+  version = "<VERSION>"
 
   ebs_csi_controller_role_name               = "ebs-csi-driver-controller"
   ebs_csi_controller_role_policy_name_prefix = "ebs-csi-driver-policy"
