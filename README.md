@@ -2,6 +2,8 @@
 
 Terraform module which creates Kubernetes EBS CSI controller resources on AWS EKS.
 
+Based on the original repo for the [EBS CSI driver](https://github.com/kubernetes-sigs/aws-ebs-csi-driver)
+
 ## Usage
 
 ```hcl
