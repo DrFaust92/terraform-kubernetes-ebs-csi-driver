@@ -182,7 +182,7 @@ resource "kubernetes_cluster_role_binding" "resizer" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role.resizer.metadata[0].name
+    name      = kubernetes_cluster_role.resizer[0].metadata[0].name
   }
 
   subject {
@@ -240,7 +240,7 @@ resource "kubernetes_cluster_role_binding" "snapshotter" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role.snapshotter.metadata[0].name
+    name      = kubernetes_cluster_role.snapshotter[0].metadata[0].name
   }
 
   subject {
