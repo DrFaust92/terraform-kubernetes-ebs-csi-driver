@@ -139,6 +139,54 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
           }
         }
 
+        dynamic "container" {
+          for_each = local.resizer_container
+
+          content {
+            name  = lookup(container.value, "name", null)
+            image = lookup(container.value, "image", null)
+
+            args = [
+              "--csi-address=$(ADDRESS)",
+              "--v=5"
+            ]
+
+            env {
+              name  = "ADDRESS"
+              value = "/var/lib/csi/sockets/pluginproxy/csi.sock"
+            }
+
+            volume_mount {
+              mount_path = "/var/lib/csi/sockets/pluginproxy/"
+              name       = "socket-dir"
+            }
+          }
+        }
+
+        dynamic "container" {
+          for_each = local.snapshot_container
+
+          content {
+            name  = lookup(container.value, "name", null)
+            image = lookup(container.value, "image", null)
+
+            args = [
+              "--csi-address=$(ADDRESS)",
+              "--leader-election=true"
+            ]
+
+            env {
+              name  = "ADDRESS"
+              value = "/var/lib/csi/sockets/pluginproxy/csi.sock"
+            }
+
+            volume_mount {
+              mount_path = "/var/lib/csi/sockets/pluginproxy/"
+              name       = "socket-dir"
+            }
+          }
+        }
+
         volume {
           name = "socket-dir"
           empty_dir {}

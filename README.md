@@ -63,13 +63,13 @@ module "ebs_csi_driver_controller" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | csi\_controller\_replica\_count | Number of EBS CSI driver controller pods | `number` | `2` | no |
-| csi\_controller\_tolerations | CSI driver controller tolerations | `list(map(string))` | <pre>[<br>  {}<br>]</pre> | no |
+| csi\_controller\_tolerations | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
 | ebs\_csi\_controller\_role\_name | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
 | ebs\_csi\_controller\_role\_policy\_name\_prefix | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
 | enable\_volume\_resizing | Whether to enable volume resizing | `bool` | `false` | no |
 | enable\_volume\_snapshot | Whether to enable volume snapshotting | `bool` | `false` | no |
 | namespace | The K8s namespace for all EBS CSI driver resources | `string` | `"kube-system"` | no |
-| node\_tolerations | CSI driver node tolerations | `list(map(string))` | <pre>[<br>  {}<br>]</pre> | no |
+| node\_tolerations | CSI driver node tolerations | `list(map(string))` | `[]` | no |
 | oidc\_url | EKS OIDC provider URL, to allow pod to assume role using IRSA | `string` | n/a | yes |
 | tags | A map of tags to add to all resources | `map(string)` | `{}` | no |
 
