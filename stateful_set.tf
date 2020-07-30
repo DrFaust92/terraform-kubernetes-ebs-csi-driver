@@ -11,7 +11,7 @@ resource "kubernetes_stateful_set" "snapshot" {
   }
 
   spec {
-    service_name = "ebs-snapshot-controller" //TODO: check if makes sense
+    service_name = local.snapshotter_name
     replicas     = 1
 
     selector {
