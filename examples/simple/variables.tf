@@ -1,3 +1,4 @@
 variable "cluster_id" {
-  type = string
+  description = "The EKS cluster id to deploy EBS CSI driver controller on"
+  type        = string
 }
