@@ -31,9 +31,20 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
         automount_service_account_token = true
         priority_class_name             = "system-cluster-critical"
 
-        toleration = merge({
+        toleration {
           operator = "Exists"
-        }, var.csi_controller_tolerations)
+        }
+
+        dynamic "toleration" {
+          for_each = var.csi_controller_tolerations
+          content {
+            key                = lookup(toleration.value, "key", null)
+            operator           = lookup(toleration.value, "operator", null)
+            effect             = lookup(toleration.value, "effect", null)
+            value              = lookup(toleration.value, "value", null)
+            toleration_seconds = lookup(toleration.value, "toleration_seconds", null)
+          }
+        }
 
         container {
           name  = "ebs-plugin"

@@ -42,9 +42,20 @@ resource "kubernetes_daemonset" "node" {
         host_network        = true
         priority_class_name = "system-cluster-critical"
 
-        toleration = merge({
+        toleration {
           operator = "Exists"
-        }, var.node_tolerations)
+        }
+
+        dynamic "toleration" {
+          for_each = var.node_tolerations
+          content {
+            key                = lookup(toleration.value, "key", null)
+            operator           = lookup(toleration.value, "operator", null)
+            effect             = lookup(toleration.value, "effect", null)
+            value              = lookup(toleration.value, "value", null)
+            toleration_seconds = lookup(toleration.value, "toleration_seconds", null)
+          }
+        }
 
         container {
           name = "ebs-plugin"
