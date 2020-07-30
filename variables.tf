@@ -33,13 +33,13 @@ variable "node_tolerations" {
   default     = {}
 }
 
-variable "tolerations" {
+variable "csi_controller_tolerations" {
   description = "CSI driver controller tolerations"
   type        = map(string)
   default     = {}
 }
 
-variable "replica_count" {
+variable "csi_controller_replica_count" {
   description = "Number of EBS CSI driver controller pods"
   type        = number
   default     = 2

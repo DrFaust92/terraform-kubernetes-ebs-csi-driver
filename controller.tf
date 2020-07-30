@@ -9,7 +9,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
     namespace = var.namespace
   }
   spec {
-    replicas = var.replica_count
+    replicas = var.csi_controller_replica_count
     selector {
       match_labels = {
         app = local.name
@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         toleration = merge({
           operator = "Exists"
-        }, var.tolerations)
+        }, var.csi_controller_tolerations)
 
         container {
           name  = "ebs-plugin"
