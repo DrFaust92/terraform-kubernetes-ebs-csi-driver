@@ -10,6 +10,6 @@ locals {
 
   snapshot_container = var.enable_volume_snapshot ? [{
     name  = "csi-snapshotter",
-    image = "quay.io/k8scsi/csi-snapshotter:2.1.1"
+    image = "quay.io/k8scsi/csi-snapshotter:v2.1.1"
   }] : []
 }
