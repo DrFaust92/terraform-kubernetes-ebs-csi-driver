@@ -17,7 +17,7 @@ resource "kubernetes_cluster_role" "provisioner" {
   rule {
     api_groups = [""]
     resources  = ["persistentvolumes"]
-    verbs      = ["get", "list", "watch", "create", "delete"]
+    verbs      = ["get", "list", "watch", "create", "delete", "patch"]
   }
 
   rule {
@@ -95,7 +95,7 @@ resource "kubernetes_cluster_role" "attacher" {
   rule {
     api_groups = [""]
     resources  = ["persistentvolumes"]
-    verbs      = ["get", "list", "watch", "update"]
+    verbs      = ["get", "list", "watch", "update", "patch"]
   }
 
   rule {
@@ -113,7 +113,7 @@ resource "kubernetes_cluster_role" "attacher" {
   rule {
     api_groups = ["storage.k8s.io"]
     resources  = ["volumeattachments"]
-    verbs      = ["get", "list", "watch", "update"]
+    verbs      = ["get", "list", "watch", "update", "patch"]
   }
 }
 
