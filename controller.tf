@@ -107,7 +107,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-attacher"
-          image = "quay.io/k8scsi/csi-attacher:v1.2.0"
+          image = "quay.io/k8scsi/csi-attacher:v2.2.0"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=5",
