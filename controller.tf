@@ -112,7 +112,6 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             "--csi-address=$(ADDRESS)",
             "--v=5",
             "--leader-election=true",
-            "--leader-election-type=leases"
           ]
 
           env {
