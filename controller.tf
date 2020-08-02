@@ -197,6 +197,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
   depends_on = [
     kubernetes_cluster_role_binding.attacher,
-    kubernetes_cluster_role_binding.provisioner
+    kubernetes_cluster_role_binding.provisioner,
+    kubernetes_csi_driver.ebs,
   ]
 }

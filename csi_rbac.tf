@@ -1,6 +1,6 @@
 resource "kubernetes_service_account" "csi_driver" {
   metadata {
-    name      = "ebs-csi-controller-sa"
+    name      = local.controller_name
     namespace = var.namespace
     annotations = {
       "eks.amazonaws.com/role-arn" = module.ebs_controller_role.this_iam_role_arn
