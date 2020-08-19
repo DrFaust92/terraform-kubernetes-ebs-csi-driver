@@ -143,27 +143,27 @@ resource "kubernetes_cluster_role" "resizer" {
   }
 
   rule {
-    api_groups = ["snapshot.storage.k8s.io"]
-    resources  = ["volumesnapshotcontents/status"]
-    verbs      = ["update"]
+    api_groups = [""]
+    resources  = ["persistentvolumes"]
+    verbs      = ["get", "list", "watch", "update", "patch"]
   }
 
   rule {
-    api_groups = ["snapshot.storage.k8s.io"]
-    resources  = ["volumesnapshotcontents"]
-    verbs      = ["create", "get", "list", "watch", "update", "delete"]
-  }
-
-  rule {
-    api_groups = ["snapshot.storage.k8s.io"]
-    resources  = ["volumesnapshotclasses"]
+    api_groups = [""]
+    resources  = ["persistentvolumeclaims"]
     verbs      = ["get", "list", "watch"]
   }
 
   rule {
     api_groups = [""]
-    resources  = ["secrets"]
-    verbs      = ["get", "list"]
+    resources  = ["persistentvolumeclaims/status"]
+    verbs      = ["update", "patch"]
+  }
+
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["storageclasses"]
+    verbs      = ["get", "list", "watch"]
   }
 
   rule {
@@ -198,6 +198,37 @@ resource "kubernetes_cluster_role" "snapshotter" {
 
   metadata {
     name = "ebs-external-snapshotter-role"
+  }
+
+
+  rule {
+    api_groups = ["snapshot.storage.k8s.io"]
+    resources  = ["volumesnapshotcontents/status"]
+    verbs      = ["update"]
+  }
+
+  rule {
+    api_groups = ["snapshot.storage.k8s.io"]
+    resources  = ["volumesnapshotcontents"]
+    verbs      = ["create", "get", "list", "watch", "update", "delete"]
+  }
+
+  rule {
+    api_groups = ["snapshot.storage.k8s.io"]
+    resources  = ["volumesnapshotclasses"]
+    verbs      = ["get", "list", "watch"]
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["secrets"]
+    verbs      = ["get", "list"]
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["events"]
+    verbs      = ["list", "watch", "create", "update", "patch"]
   }
 
   rule {
