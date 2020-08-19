@@ -5,7 +5,7 @@ locals {
 
   resizer_container = var.enable_volume_resizing ? [{
     name  = "csi-resizer",
-    image = "quay.io/k8scsi/csi-resizer:v0.3.0"
+    image = "quay.io/k8scsi/csi-resizer:v0.5.0"
   }] : []
 
   snapshot_container = var.enable_volume_snapshot ? [{
