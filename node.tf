@@ -58,7 +58,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "amazon/aws-ebs-csi-driver:v0.5.0"
+          image = "amazon/aws-ebs-csi-driver:v0.6.0"
           args = [
             "node",
             "--endpoint=$(CSI_ENDPOINT)",

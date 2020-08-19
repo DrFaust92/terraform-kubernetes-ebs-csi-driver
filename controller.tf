@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "ebs-plugin"
-          image = "amazon/aws-ebs-csi-driver:v0.5.0"
+          image = "amazon/aws-ebs-csi-driver:v0.6.0"
           args = [
             "--endpoint=$(CSI_ENDPOINT)",
             "--logtostderr",
@@ -85,7 +85,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "quay.io/k8scsi/csi-provisioner:v1.6.0"
+          image = "quay.io/k8scsi/csi-provisioner:v1.6.3"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=5",
