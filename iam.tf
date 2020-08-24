@@ -29,7 +29,7 @@ resource "aws_iam_policy" "ebs_controller_policy" {
 
 module "ebs_controller_role" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "v2.7.0"
+  version                       = "2.18.0"
   create_role                   = true
   role_name                     = var.ebs_csi_controller_role_name
   provider_url                  = replace(var.oidc_url, "https://", "")
