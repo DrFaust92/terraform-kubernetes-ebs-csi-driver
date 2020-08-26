@@ -94,6 +94,7 @@ resource "kubernetes_daemonset" "node" {
           port {
             name           = "healthz"
             container_port = 9808
+            host_port      = 9808
             protocol       = "TCP"
           }
 
