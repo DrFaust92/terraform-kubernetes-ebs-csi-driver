@@ -4,7 +4,8 @@ resource "kubernetes_csi_driver" "ebs" {
   }
 
   spec {
-    attach_required   = true
-    pod_info_on_mount = false
+    attach_required        = true
+    pod_info_on_mount      = false
+    volume_lifecycle_modes = ["Persistent"]
   }
 }

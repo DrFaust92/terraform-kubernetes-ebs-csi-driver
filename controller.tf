@@ -67,6 +67,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
           port {
             name           = "healthz"
             container_port = 9808
+            host_port      = 9808
             protocol       = "TCP"
           }
 
