@@ -52,7 +52,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
               "--endpoint=$(CSI_ENDPOINT)",
               "--logtostderr",
               "--v=5",
-              len(local.csi_volume_tags) > 0 ? "--extra-tags=${local.csi_volume_tags}" : "",
+              length(local.csi_volume_tags) > 0 ? "--extra-tags=${local.csi_volume_tags}" : "",
               var.eks_cluster_id != "" ? "--k8s-tag-cluster-id=${var.eks_cluster_id}" : ""
             ]
           )
