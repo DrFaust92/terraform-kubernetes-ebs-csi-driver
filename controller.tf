@@ -85,13 +85,12 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "quay.io/k8scsi/csi-provisioner:v1.6.1"
+          image = "quay.io/k8scsi/csi-provisioner:v2.0.4"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=5",
             "--feature-gates=Topology=true",
-            "--enable-leader-election",
-            "--leader-election-type=leases"
+            "--leader-election",
           ]
 
           env {
