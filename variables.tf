@@ -56,3 +56,15 @@ variable "enable_volume_snapshot" {
   type        = bool
   default     = false
 }
+
+variable "extra_create_metadata" {
+  description = "If set, add pv/pvc metadata to plugin create requests as parameters."
+  type        = bool
+  default     = false
+}
+
+variable "eks_cluster_id" {
+  description = "ID of the Kubernetes cluster used for tagging provisioned EBS volumes"
+  type        = string
+  default     = ""
+}
