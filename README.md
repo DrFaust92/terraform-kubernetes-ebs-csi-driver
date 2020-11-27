@@ -68,6 +68,7 @@ module "ebs_csi_driver_controller" {
 | ebs\_csi\_controller\_role\_policy\_name\_prefix | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
 | enable\_volume\_resizing | Whether to enable volume resizing | `bool` | `false` | no |
 | enable\_volume\_snapshot | Whether to enable volume snapshotting | `bool` | `false` | no |
+| extra\_create\_metadata | If set, add pv/pvc metadata to plugin create requests as parameters. | `bool` | `false` | no |
 | namespace | The K8s namespace for all EBS CSI driver resources | `string` | `"kube-system"` | no |
 | node\_tolerations | CSI driver node tolerations | `list(map(string))` | `[]` | no |
 | oidc\_url | EKS OIDC provider URL, to allow pod to assume role using IRSA | `string` | n/a | yes |

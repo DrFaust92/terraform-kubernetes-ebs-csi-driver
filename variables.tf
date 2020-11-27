@@ -56,3 +56,9 @@ variable "enable_volume_snapshot" {
   type        = bool
   default     = false
 }
+
+variable "extra_create_metadata" {
+  description = "If set, add pv/pvc metadata to plugin create requests as parameters."
+  type        = bool
+  default     = false
+}
