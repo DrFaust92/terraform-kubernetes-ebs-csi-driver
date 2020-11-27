@@ -63,6 +63,12 @@ resource "kubernetes_cluster_role" "provisioner" {
   }
 
   rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["volumeattachments"]
+    verbs      = ["get", "list", "watch"]
+  }
+
+  rule {
     api_groups = ["coordination.k8s.io"]
     resources  = ["leases"]
     verbs      = ["get", "watch", "list", "delete", "update", "create"]
