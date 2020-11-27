@@ -49,14 +49,14 @@ module "ebs_csi_driver_controller" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.6, < 0.14 |
-| kubernetes | ~> 1.11.4 |
+| kubernetes | >= 1.11.4 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | aws | n/a |
-| kubernetes | ~> 1.11.4 |
+| kubernetes | >= 1.11.4 |
 
 ## Inputs
 

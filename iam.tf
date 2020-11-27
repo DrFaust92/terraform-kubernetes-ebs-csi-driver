@@ -32,7 +32,7 @@ module "ebs_controller_role" {
   version                       = "2.25.0"
   create_role                   = true
   role_name                     = var.ebs_csi_controller_role_name
-  provider_url                  = replace(var.oidc_url, "https://", "")
+  provider_url                  = var.oidc_url
   role_policy_arns              = [aws_iam_policy.ebs_controller_policy.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${local.controller_name}"]
   tags                          = var.tags
