@@ -62,3 +62,9 @@ variable "extra_create_metadata" {
   type        = bool
   default     = false
 }
+
+variable "eks_cluster_id" {
+  description = "ID of the Kubernetes cluster used for tagging provisioned EBS volumes"
+  type        = string
+  default     = ""
+}

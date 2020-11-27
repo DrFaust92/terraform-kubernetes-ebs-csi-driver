@@ -1,13 +1,3 @@
-locals {
-  provisioner_args = [
-    "--csi-address=$(ADDRESS)",
-    "--v=5",
-    "--feature-gates=Topology=true",
-    "--leader-election",
-  ]
-  provisioner_args_with_metadata = concat(provisioner_args, ["--extra-create-metadata"])
-}
-
 resource "kubernetes_deployment" "ebs_csi_controller" {
   metadata {
     name      = local.controller_name
@@ -57,12 +47,15 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
         container {
           name  = "ebs-plugin"
           image = "amazon/aws-ebs-csi-driver:${local.ebs_csi_driver_version}"
-          args = [
-            "--endpoint=$(CSI_ENDPOINT)",
-            "--logtostderr",
-            "--v=5",
-            "--extra-tags=${local.csi_volume_tags}"
-          ]
+          args = compact(
+            [
+              "--endpoint=$(CSI_ENDPOINT)",
+              "--logtostderr",
+              "--v=5",
+              len(local.csi_volume_tags) > 0 ? "--extra-tags=${local.csi_volume_tags}" : "",
+              var.eks_cluster_id != "" ? "--k8s-tag-cluster-id=${var.eks_cluster_id}" : ""
+            ]
+          )
 
           env {
             name  = "CSI_ENDPOINT"
@@ -96,7 +89,15 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
         container {
           name  = "csi-provisioner"
           image = "quay.io/k8scsi/csi-provisioner:v2.0.4"
-          args  = var.extra_create_metadata ? local.provisioner_args_with_metadata : local.provisioner_args
+          args = compact(
+            [
+              "--csi-address=$(ADDRESS)",
+              "--v=5",
+              "--feature-gates=Topology=true",
+              "--leader-election",
+              var.extra_create_metadata ? "--extra-create-metadata" : ""
+            ]
+          )
 
           env {
             name  = "ADDRESS"

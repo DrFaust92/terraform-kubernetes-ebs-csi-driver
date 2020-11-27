@@ -66,6 +66,7 @@ module "ebs_csi_driver_controller" {
 | csi\_controller\_tolerations | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
 | ebs\_csi\_controller\_role\_name | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
 | ebs\_csi\_controller\_role\_policy\_name\_prefix | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
+| eks\_cluster\_id | ID of the Kubernetes cluster used for tagging provisioned EBS volumes | `string` | `""` | no |
 | enable\_volume\_resizing | Whether to enable volume resizing | `bool` | `false` | no |
 | enable\_volume\_snapshot | Whether to enable volume snapshotting | `bool` | `false` | no |
 | extra\_create\_metadata | If set, add pv/pvc metadata to plugin create requests as parameters. | `bool` | `false` | no |
