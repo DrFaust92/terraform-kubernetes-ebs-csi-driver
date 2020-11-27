@@ -58,7 +58,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "amazon/aws-ebs-csi-driver:v0.6.0"
+          image = "amazon/aws-ebs-csi-driver:${local.ebs_csi_driver_version}"
           args = [
             "node",
             "--endpoint=$(CSI_ENDPOINT)",
@@ -113,7 +113,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "node-driver-registrar"
-          image = "quay.io/k8scsi/csi-node-driver-registrar:v1.3.0"
+          image = "quay.io/k8scsi/csi-node-driver-registrar:v2.0.1"
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
@@ -151,7 +151,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "liveness-probe"
-          image = "quay.io/k8scsi/livenessprobe:v2.0.0"
+          image = "quay.io/k8scsi/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]

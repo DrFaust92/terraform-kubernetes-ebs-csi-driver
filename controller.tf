@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "ebs-plugin"
-          image = "amazon/aws-ebs-csi-driver:v0.6.0"
+          image = "amazon/aws-ebs-csi-driver:${local.ebs_csi_driver_version}"
           args = [
             "--endpoint=$(CSI_ENDPOINT)",
             "--logtostderr",
@@ -85,7 +85,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "quay.io/k8scsi/csi-provisioner:v1.6.0"
+          image = "quay.io/k8scsi/csi-provisioner:v1.6.1"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=5",
@@ -107,7 +107,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-attacher"
-          image = "quay.io/k8scsi/csi-attacher:v2.2.0"
+          image = "quay.io/k8scsi/csi-attacher:v3.0.2"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=5",
@@ -127,7 +127,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "liveness-probe"
-          image = "quay.io/k8scsi/livenessprobe:v2.0.0"
+          image = "quay.io/k8scsi/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]
