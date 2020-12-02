@@ -35,6 +35,7 @@ module "ebs_controller_role" {
   role_name_prefix              = var.ebs_csi_controller_role_name
   provider_url                  = var.oidc_url
   role_policy_arns              = [aws_iam_policy.ebs_controller_policy.arn]
+  number_of_role_policy_arns    = 1
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${local.controller_name}"]
   tags                          = var.tags
 }
