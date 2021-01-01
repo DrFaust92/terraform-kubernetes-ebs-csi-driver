@@ -68,3 +68,9 @@ variable "eks_cluster_id" {
   type        = string
   default     = ""
 }
+
+variable "extra_node_selectors" {
+  description = "A map of extra node selectors"
+  default     = {}
+  type        = map(string)
+}

@@ -1,5 +1,5 @@
 locals {
-  ebs_csi_driver_version = "v0.7.1"
+  ebs_csi_driver_version = "v0.8.0"
   liveness_probe_version = "v2.1.0"
   controller_name        = "ebs-csi-controller"
   daemonset_name         = "ebs-csi-node"
