@@ -121,6 +121,12 @@ resource "kubernetes_cluster_role" "attacher" {
     resources  = ["volumeattachments"]
     verbs      = ["get", "list", "watch", "update", "patch"]
   }
+
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["volumeattachments/status"]
+    verbs      = ["patch"]
+  }
 }
 
 resource "kubernetes_cluster_role_binding" "attacher" {
