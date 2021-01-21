@@ -106,7 +106,7 @@ resource "kubernetes_cluster_role" "attacher" {
 
   rule {
     api_groups = [""]
-    resources  = ["events"]
+    resources  = ["nodes"]
     verbs      = ["get", "list", "watch"]
   }
 
