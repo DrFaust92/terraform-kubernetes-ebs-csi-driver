@@ -112,7 +112,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "node-driver-registrar"
-          image = "quay.io/k8scsi/csi-node-driver-registrar:v2.0.1"
+          image = "quay.io/k8scsi/csi-node-driver-registrar:v2.1.0"
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
