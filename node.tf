@@ -4,6 +4,12 @@ resource "kubernetes_daemonset" "node" {
     namespace = var.namespace
   }
 
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations["field.cattle.io/publicEndpoints"],
+    ]
+  }
+
   spec {
     selector {
       match_labels = {
