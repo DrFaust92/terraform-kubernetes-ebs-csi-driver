@@ -45,7 +45,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "ebs-plugin"
-          image = var.ebs_csi_controller_image != "" ? "amazon/aws-ebs-csi-driver:${local.ebs_csi_driver_version}" : var.ebs_csi_controller_image
+          image = "${var.ebs_csi_controller_image == "" ? "amazon/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = compact(
             [
               "--endpoint=$(CSI_ENDPOINT)",
