@@ -10,6 +10,12 @@ variable "ebs_csi_controller_role_policy_name_prefix" {
   type        = string
 }
 
+variable "ebs_csi_controller_image" {
+  description = "The EBS CSI driver controller's image"
+  default     = ""
+  type        = string
+}
+
 variable "tags" {
   description = "A map of tags to add to all resources"
   default     = {}
