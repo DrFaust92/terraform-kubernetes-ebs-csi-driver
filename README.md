@@ -37,6 +37,7 @@ module "ebs_csi_driver_controller" {
   source = "DrFaust92/ebs-csi-driver/kubernetes"
   version = "<VERSION>"
 
+  ebs_csi_controller_image                   = ""
   ebs_csi_controller_role_name               = "ebs-csi-driver-controller"
   ebs_csi_controller_role_policy_name_prefix = "ebs-csi-driver-policy"
   oidc_url                                   = aws_iam_openid_connect_provider.openid_connect.url
@@ -64,6 +65,7 @@ module "ebs_csi_driver_controller" {
 |------|-------------|------|---------|:--------:|
 | csi\_controller\_replica\_count | Number of EBS CSI driver controller pods | `number` | `2` | no |
 | csi\_controller\_tolerations | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
+| ebs\_csi\_controller\_image | The EBS CSI driver controller's image | `string` | `""` | no |
 | ebs\_csi\_controller\_role\_name | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
 | ebs\_csi\_controller\_role\_policy\_name\_prefix | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
 | eks\_cluster\_id | ID of the Kubernetes cluster used for tagging provisioned EBS volumes | `string` | `""` | no |
