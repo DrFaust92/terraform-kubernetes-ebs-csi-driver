@@ -41,7 +41,7 @@ resource "kubernetes_daemonset" "node" {
 
         node_selector = merge({
           "beta.kubernetes.io/os" : "linux",
-        }, var.extra_node_selectors)
+        }, var.extra_node_selectors, var.node_extra_node_selectors)
 
         host_network        = true
         priority_class_name = "system-cluster-critical"
