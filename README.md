@@ -51,6 +51,7 @@ module "ebs_csi_driver_controller" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.6 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 1.11.4 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 3.40.0 |
 
 ## Providers
 
