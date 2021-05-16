@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "ebs_controller_policy_doc" {
 resource "aws_iam_policy" "ebs_controller_policy" {
   name_prefix = var.ebs_csi_controller_role_policy_name_prefix
   policy      = data.aws_iam_policy_document.ebs_controller_policy_doc.json
+  tags        = var.tags
 }
 
 module "ebs_controller_role" {
