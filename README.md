@@ -100,6 +100,7 @@ module "ebs_csi_driver_controller" {
 | <a name="input_enable_volume_snapshot"></a> [enable\_volume\_snapshot](#input\_enable\_volume\_snapshot) | Whether to enable volume snapshotting | `bool` | `false` | no |
 | <a name="input_extra_create_metadata"></a> [extra\_create\_metadata](#input\_extra\_create\_metadata) | If set, add pv/pvc metadata to plugin create requests as parameters. | `bool` | `false` | no |
 | <a name="input_extra_node_selectors"></a> [extra\_node\_selectors](#input\_extra\_node\_selectors) | A map of extra node selectors for all components | `map(string)` | `{}` | no |
+| <a name="input_labels"></a> [labels](#input\_labels) | A map of extra labels for all resources | `map(string)` | `{}` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The K8s namespace for all EBS CSI driver resources | `string` | `"kube-system"` | no |
 | <a name="input_node_extra_node_selectors"></a> [node\_extra\_node\_selectors](#input\_node\_extra\_node\_selectors) | A map of extra node selectors for node pods | `map(string)` | `{}` | no |
 | <a name="input_node_tolerations"></a> [node\_tolerations](#input\_node\_tolerations) | CSI driver node tolerations | `list(map(string))` | `[]` | no |

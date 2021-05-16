@@ -2,6 +2,7 @@ resource "kubernetes_daemonset" "node" {
   metadata {
     name      = local.daemonset_name
     namespace = var.namespace
+    labels    = var.labels
   }
 
   lifecycle {

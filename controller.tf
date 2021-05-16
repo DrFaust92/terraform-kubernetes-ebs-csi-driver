@@ -2,6 +2,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
   metadata {
     name      = local.controller_name
     namespace = var.namespace
+    labels    = var.labels
   }
   spec {
     replicas = var.csi_controller_replica_count
@@ -87,7 +88,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "quay.io/k8scsi/csi-provisioner:v2.1.0"
+          image = "quay.io/k8scsi/csi-provisioner:v2.1.1"
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
