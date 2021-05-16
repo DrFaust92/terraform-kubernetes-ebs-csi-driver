@@ -84,6 +84,18 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             period_seconds        = 10
             failure_threshold     = 5
           }
+
+          readiness_probe {
+            http_get {
+              path = "/healthz"
+              port = "healthz"
+            }
+
+            initial_delay_seconds = 10
+            timeout_seconds       = 3
+            period_seconds        = 10
+            failure_threshold     = 5
+          }
         }
 
         container {
