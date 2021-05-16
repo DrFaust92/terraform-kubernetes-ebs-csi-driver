@@ -72,7 +72,9 @@ module "ebs_csi_driver_controller" {
 | enable\_volume\_resizing | Whether to enable volume resizing | `bool` | `false` | no |
 | enable\_volume\_snapshot | Whether to enable volume snapshotting | `bool` | `false` | no |
 | extra\_create\_metadata | If set, add pv/pvc metadata to plugin create requests as parameters. | `bool` | `false` | no |
-| extra\_node\_selectors | A map of extra node selectors | `map(string)` | `{}` | no |
+| extra\_node\_selectors | A map of extra node selectors for all components | `map(string)` | `{}` | no |
+| node_extra\_node\_selectors | A map of extra node selectors for node component | `map(string)` | `{}` | no |
+| controller_extra\_node\_selectors | A map of extra node selectors for controller component | `map(string)` | `{}` | no |
 | namespace | The K8s namespace for all EBS CSI driver resources | `string` | `"kube-system"` | no |
 | node\_tolerations | CSI driver node tolerations | `list(map(string))` | `[]` | no |
 | oidc\_url | EKS OIDC provider URL, to allow pod to assume role using IRSA | `string` | n/a | yes |

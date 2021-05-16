@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
       spec {
         node_selector = merge({
           "beta.kubernetes.io/os" : "linux",
-        }, var.extra_node_selectors)
+        }, var.extra_node_selectors, var.controller_extra_node_selectors)
 
         service_account_name            = kubernetes_service_account.csi_driver.metadata[0].name
         automount_service_account_token = true
