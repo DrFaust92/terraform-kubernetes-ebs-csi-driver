@@ -51,7 +51,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             [
               "--endpoint=$(CSI_ENDPOINT)",
               "--logtostderr",
-              "--v=5",
+              "--v=${tostring(var.log_level)}",
               length(local.csi_volume_tags) > 0 ? "--extra-tags=${local.csi_volume_tags}" : "",
               var.eks_cluster_id != "" ? "--k8s-tag-cluster-id=${var.eks_cluster_id}" : ""
             ]
@@ -104,7 +104,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
-              "--v=5",
+              "--v=${tostring(var.log_level)}",
               "--feature-gates=Topology=true",
               "--leader-election",
               var.extra_create_metadata ? "--extra-create-metadata" : ""
@@ -127,7 +127,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
           image = "quay.io/k8scsi/csi-attacher:v3.1.0"
           args = [
             "--csi-address=$(ADDRESS)",
-            "--v=5",
+            "--v=${tostring(var.log_level)}",
             "--leader-election=true",
           ]
 
@@ -164,7 +164,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
             args = [
               "--csi-address=$(ADDRESS)",
-              "--v=5"
+              "--v=${tostring(var.log_level)}",
             ]
 
             env {

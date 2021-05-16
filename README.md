@@ -64,7 +64,7 @@ module "ebs_csi_driver_controller" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ebs_controller_role"></a> [ebs\_controller\_role](#module\_ebs\_controller\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 3.16.0 |
+| <a name="module_ebs_controller_role"></a> [ebs\_controller\_role](#module\_ebs\_controller\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 4.1.0 |
 
 ## Resources
 
