@@ -167,8 +167,8 @@ resource "kubernetes_cluster_role" "resizer" {
   }
 
   rule {
-    api_groups = ["storage.k8s.io"]
-    resources  = ["storageclasses"]
+    api_groups = [""]
+    resources  = ["pods"]
     verbs      = ["get", "list", "watch"]
   }
 
