@@ -69,7 +69,7 @@ resource "kubernetes_daemonset" "node" {
             "node",
             "--endpoint=$(CSI_ENDPOINT)",
             "--logtostderr",
-            "--v=5"
+            "--v=${tostring(var.log_level)}",
           ]
 
           security_context {
@@ -135,7 +135,7 @@ resource "kubernetes_daemonset" "node" {
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
-            "--v=5"
+            "--v=${tostring(var.log_level)}",
           ]
 
           lifecycle {
