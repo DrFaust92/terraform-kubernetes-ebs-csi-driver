@@ -104,3 +104,9 @@ variable "log_level" {
   default     = 5
   type        = number
 }
+
+variable "volume_attach_limit" {
+  description = "Configure maximum volume attachments per node. -1 means use default configuration"
+  default     = -1
+  type        = number
+}
