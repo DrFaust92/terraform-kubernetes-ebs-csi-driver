@@ -65,12 +65,13 @@ resource "kubernetes_daemonset" "node" {
         container {
           name  = "ebs-plugin"
           image = "${var.ebs_csi_controller_image == "" ? "amazon/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
-          args = [
+          args = flatten([
             "node",
             "--endpoint=$(CSI_ENDPOINT)",
             "--logtostderr",
             "--v=${tostring(var.log_level)}",
-          ]
+            var.volume_attach_limit == -1 ? [] : ["--volume-attach-limit=${var.volume_attach_limit}"]
+          ])
 
           security_context {
             privileged = true
