@@ -10,6 +10,12 @@ variable "ebs_csi_controller_role_policy_name_prefix" {
   type        = string
 }
 
+variable "ebs_csi_driver_version" {
+  description = "The EBS CSI driver controller's image version"
+  default     = ""
+  type        = string
+}
+
 variable "ebs_csi_controller_image" {
   description = "The EBS CSI driver controller's image"
   default     = ""
