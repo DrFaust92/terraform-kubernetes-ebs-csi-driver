@@ -132,7 +132,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "node-driver-registrar"
-          image = "quay.io/k8scsi/csi-node-driver-registrar:v2.1.0"
+          image = "k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.1.0"
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
@@ -170,7 +170,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "liveness-probe"
-          image = "quay.io/k8scsi/livenessprobe:${local.liveness_probe_version}"
+          image = "k8s.gcr.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]

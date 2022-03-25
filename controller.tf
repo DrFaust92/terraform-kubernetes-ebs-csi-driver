@@ -100,7 +100,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "quay.io/k8scsi/csi-provisioner:v2.1.1"
+          image = "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.1"
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
@@ -124,7 +124,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-attacher"
-          image = "quay.io/k8scsi/csi-attacher:v3.1.0"
+          image = "k8s.gcr.io/sig-storage/csi-attacher:v3.1.0"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=${tostring(var.log_level)}",
@@ -144,7 +144,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "liveness-probe"
-          image = "quay.io/k8scsi/livenessprobe:${local.liveness_probe_version}"
+          image = "k8s.gcr.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]
