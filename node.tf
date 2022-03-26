@@ -41,7 +41,7 @@ resource "kubernetes_daemonset" "node" {
         }
 
         node_selector = merge({
-          "beta.kubernetes.io/os" : "linux",
+          "kubernetes.io/os" : "linux",
         }, var.extra_node_selectors, var.node_extra_node_selectors)
 
         host_network                    = true
@@ -66,7 +66,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "amazon/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver:${local.ebs_csi_driver_version}" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = flatten([
             "node",
             "--endpoint=$(CSI_ENDPOINT)",
@@ -134,7 +134,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "node-driver-registrar"
-          image = "quay.io/k8scsi/csi-node-driver-registrar:v2.1.0"
+          image = "k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.1.0"
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
@@ -172,7 +172,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "liveness-probe"
-          image = "quay.io/k8scsi/livenessprobe:${local.liveness_probe_version}"
+          image = "k8s.gcr.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]
