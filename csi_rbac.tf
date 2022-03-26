@@ -5,13 +5,15 @@ resource "kubernetes_service_account" "csi_driver" {
     annotations = {
       "eks.amazonaws.com/role-arn" = module.ebs_controller_role.iam_role_arn
     }
+    labels = var.labels
   }
   automount_service_account_token = true
 }
 
 resource "kubernetes_cluster_role" "provisioner" {
   metadata {
-    name = "ebs-external-provisioner-role"
+    name   = "ebs-external-provisioner-role"
+    labels = var.labels
   }
 
   rule {
@@ -77,7 +79,8 @@ resource "kubernetes_cluster_role" "provisioner" {
 
 resource "kubernetes_cluster_role_binding" "provisioner" {
   metadata {
-    name = "ebs-csi-provisioner-binding"
+    name   = "ebs-csi-provisioner-binding"
+    labels = var.labels
   }
 
   role_ref {
@@ -95,7 +98,8 @@ resource "kubernetes_cluster_role_binding" "provisioner" {
 
 resource "kubernetes_cluster_role" "attacher" {
   metadata {
-    name = "ebs-external-attacher-role"
+    name   = "ebs-external-attacher-role"
+    labels = var.labels
   }
 
   rule {
@@ -131,7 +135,8 @@ resource "kubernetes_cluster_role" "attacher" {
 
 resource "kubernetes_cluster_role_binding" "attacher" {
   metadata {
-    name = "ebs-csi-attacher-binding"
+    name   = "ebs-csi-attacher-binding"
+    labels = var.labels
   }
 
   role_ref {
@@ -151,7 +156,8 @@ resource "kubernetes_cluster_role" "resizer" {
   count = var.enable_volume_resizing ? 1 : 0
 
   metadata {
-    name = "ebs-external-resizer-role"
+    name   = "ebs-external-resizer-role"
+    labels = var.labels
   }
 
   rule {
@@ -196,7 +202,8 @@ resource "kubernetes_cluster_role_binding" "resizer" {
   count = var.enable_volume_resizing ? 1 : 0
 
   metadata {
-    name = "ebs-csi-resizer-binding"
+    name   = "ebs-csi-resizer-binding"
+    labels = var.labels
   }
 
   role_ref {
@@ -216,7 +223,8 @@ resource "kubernetes_cluster_role" "snapshotter" {
   count = var.enable_volume_snapshot ? 1 : 0
 
   metadata {
-    name = "ebs-external-snapshotter-role"
+    name   = "ebs-external-snapshotter-role"
+    labels = var.labels
   }
 
 
@@ -243,7 +251,8 @@ resource "kubernetes_cluster_role_binding" "snapshotter" {
   count = var.enable_volume_snapshot ? 1 : 0
 
   metadata {
-    name = "ebs-csi-snapshotter-binding"
+    name   = "ebs-csi-snapshotter-binding"
+    labels = var.labels
   }
 
   role_ref {

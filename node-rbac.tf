@@ -2,13 +2,15 @@ resource "kubernetes_service_account" "node" {
   metadata {
     name      = local.daemonset_name
     namespace = var.namespace
+    labels    = var.labels
   }
   automount_service_account_token = true
 }
 
 resource "kubernetes_cluster_role" "node" {
   metadata {
-    name = "ebs-csi-node-role"
+    name   = "ebs-csi-node-role"
+    labels = var.labels
   }
 
   rule {
@@ -20,7 +22,8 @@ resource "kubernetes_cluster_role" "node" {
 
 resource "kubernetes_cluster_role_binding" "node" {
   metadata {
-    name = "ebs-csi-provisioner-binding"
+    name   = "ebs-csi-node-getter-binding"
+    labels = var.labels
   }
 
   role_ref {
