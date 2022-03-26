@@ -67,6 +67,12 @@ resource "kubernetes_cluster_role" "provisioner" {
     resources  = ["leases"]
     verbs      = ["get", "watch", "list", "delete", "update", "create"]
   }
+
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["volumeattachments"]
+    verbs      = ["get", "list", "watch"]
+  }
 }
 
 resource "kubernetes_cluster_role_binding" "provisioner" {
@@ -166,16 +172,23 @@ resource "kubernetes_cluster_role" "resizer" {
     verbs      = ["update", "patch"]
   }
 
+
   rule {
-    api_groups = [""]
-    resources  = ["pods"]
-    verbs      = ["get", "list", "watch"]
+    api_groups = ["storage.k8s.io"]
+    resources  = ["storageclasses"]
+    verbs      = ["list", "watch", "create", "update", "patch"]
   }
 
   rule {
     api_groups = [""]
     resources  = ["events"]
     verbs      = ["list", "watch", "create", "update", "patch"]
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods"]
+    verbs      = ["get", "list", "watch"]
   }
 }
 
@@ -223,48 +236,6 @@ resource "kubernetes_cluster_role" "snapshotter" {
     api_groups = ["snapshot.storage.k8s.io"]
     resources  = ["volumesnapshotclasses"]
     verbs      = ["get", "list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["secrets"]
-    verbs      = ["get", "list"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["events"]
-    verbs      = ["list", "watch", "create", "update", "patch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["persistentvolumes"]
-    verbs      = ["get", "list", "watch", "update", "patch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["persistentvolumeclaims"]
-    verbs      = ["get", "list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["persistentvolumeclaims/status"]
-    verbs      = ["update", "patch"]
-  }
-
-  rule {
-    api_groups = ["storage.k8s.io"]
-    resources  = ["storageclasses"]
-    verbs      = ["get", "list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["events"]
-    verbs      = ["list", "watch", "create", "update", "patch"]
   }
 }
 

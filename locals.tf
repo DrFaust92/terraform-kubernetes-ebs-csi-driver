@@ -1,6 +1,6 @@
 locals {
   ebs_csi_driver_version = var.ebs_csi_driver_version == "" ? "v0.8.1-amazonlinux" : var.ebs_csi_driver_version
-  liveness_probe_version = "v2.2.0"
+  liveness_probe_version = "v2.4.0"
   controller_name        = "ebs-csi-controller"
   daemonset_name         = "ebs-csi-node"
   csi_volume_tags        = join(",", [for key, value in var.tags : "${key}=${value}"])
