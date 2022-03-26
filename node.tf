@@ -44,8 +44,10 @@ resource "kubernetes_daemonset" "node" {
           "beta.kubernetes.io/os" : "linux",
         }, var.extra_node_selectors, var.node_extra_node_selectors)
 
-        host_network        = true
-        priority_class_name = "system-cluster-critical"
+        host_network                    = true
+        service_account_name            = kubernetes_service_account.node.metadata[0].name
+        automount_service_account_token = true
+        priority_class_name             = "system-cluster-critical"
 
         toleration {
           operator = "Exists"
