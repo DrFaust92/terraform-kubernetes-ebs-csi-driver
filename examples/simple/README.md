@@ -22,7 +22,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ebs_csi_driver_controller"></a> [ebs\_csi\_driver\_controller](#module\_ebs\_csi\_driver\_controller) | ../.. |  |
+| <a name="module_ebs_csi_driver_controller"></a> [ebs\_csi\_driver\_controller](#module\_ebs\_csi\_driver\_controller) | ../.. | n/a |
 
 ## Resources
 
