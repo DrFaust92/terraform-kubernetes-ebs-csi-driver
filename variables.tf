@@ -116,3 +116,9 @@ variable "volume_attach_limit" {
   default     = -1
   type        = number
 }
+
+variable "additional_iam_policies_arns" {
+  description = "The EBS CSI driver controller's additional policies to allow more actions (kms, etc)"
+  default     = []
+  type        = list(string)
+}
