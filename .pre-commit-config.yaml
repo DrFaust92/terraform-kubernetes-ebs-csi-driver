@@ -4,5 +4,6 @@ repos:
   hooks:
     - id: terraform_fmt
     - id: terraform_docs
+    - id: terraform_validate    
     - id: terraform_tflint
     - id: terraform_tfsec
