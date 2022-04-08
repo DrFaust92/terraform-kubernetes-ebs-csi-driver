@@ -55,14 +55,14 @@ module "ebs_csi_driver_controller" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.8.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.9.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.9.0 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.10.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ebs_controller_role"></a> [ebs\_controller\_role](#module\_ebs\_controller\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 4.17.0 |
+| <a name="module_ebs_controller_role"></a> [ebs\_controller\_role](#module\_ebs\_controller\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 4.18.0 |
 
 ## Resources
 

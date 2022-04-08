@@ -66,7 +66,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver:${local.ebs_csi_driver_version}" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = flatten([
             "node",
             "--endpoint=$(CSI_ENDPOINT)",
