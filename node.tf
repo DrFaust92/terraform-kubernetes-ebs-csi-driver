@@ -3,6 +3,10 @@ resource "kubernetes_daemonset" "node" {
     name      = local.daemonset_name
     namespace = var.namespace
     labels    = var.labels
+    annotations = {
+      "prometheus.io/port"   = "8080"
+      "prometheus.io/scrape" = "false"
+    }
   }
 
   lifecycle {
@@ -69,6 +73,7 @@ resource "kubernetes_daemonset" "node" {
           image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = flatten([
             "node",
+            "--http-endpoint=:8080",
             "--endpoint=$(CSI_ENDPOINT)",
             "--logtostderr",
             "--v=${tostring(var.log_level)}",

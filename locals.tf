@@ -1,5 +1,5 @@
 locals {
-  ebs_csi_driver_version = var.ebs_csi_driver_version == "" ? "v1.5.1" : var.ebs_csi_driver_version
+  ebs_csi_driver_version = var.ebs_csi_driver_version == "" ? "v1.6.2" : var.ebs_csi_driver_version
   liveness_probe_version = "v2.4.0"
   controller_name        = "ebs-csi-controller"
   daemonset_name         = "ebs-csi-node"
@@ -7,11 +7,11 @@ locals {
 
   resizer_container = var.enable_volume_resizing ? [{
     name  = "csi-resizer",
-    image = "k8s.gcr.io/sig-storage/csi-resizer:v1.1.0"
+    image = "k8s.gcr.io/sig-storage/csi-resizer:v1.4.0"
   }] : []
 
   snapshot_container = var.enable_volume_snapshot ? [{
     name  = "csi-snapshotter",
-    image = "k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0"
+    image = "k8s.gcr.io/sig-storage/csi-snapshotter:v6.0.1"
   }] : []
 }
