@@ -41,11 +41,13 @@ resource "kubernetes_daemonset" "node" {
         }
 
         node_selector = merge({
-          "beta.kubernetes.io/os" : "linux",
+          "kubernetes.io/os" : "linux",
         }, var.extra_node_selectors, var.node_extra_node_selectors)
 
-        host_network        = true
-        priority_class_name = "system-cluster-critical"
+        host_network                    = true
+        service_account_name            = kubernetes_service_account.node.metadata[0].name
+        automount_service_account_token = true
+        priority_class_name             = "system-cluster-critical"
 
         toleration {
           operator = "Exists"
@@ -64,7 +66,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "amazon/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = flatten([
             "node",
             "--endpoint=$(CSI_ENDPOINT)",

@@ -15,14 +15,14 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-| <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.8.0 |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | 3.1.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ebs_csi_driver_controller"></a> [ebs\_csi\_driver\_controller](#module\_ebs\_csi\_driver\_controller) | ../.. |  |
+| <a name="module_ebs_csi_driver_controller"></a> [ebs\_csi\_driver\_controller](#module\_ebs\_csi\_driver\_controller) | ../.. | n/a |
 
 ## Resources
 

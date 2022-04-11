@@ -5,13 +5,15 @@ resource "kubernetes_service_account" "csi_driver" {
     annotations = {
       "eks.amazonaws.com/role-arn" = module.ebs_controller_role.iam_role_arn
     }
+    labels = var.labels
   }
   automount_service_account_token = true
 }
 
 resource "kubernetes_cluster_role" "provisioner" {
   metadata {
-    name = "ebs-external-provisioner-role"
+    name   = "ebs-external-provisioner-role"
+    labels = var.labels
   }
 
   rule {
@@ -67,11 +69,18 @@ resource "kubernetes_cluster_role" "provisioner" {
     resources  = ["leases"]
     verbs      = ["get", "watch", "list", "delete", "update", "create"]
   }
+
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["volumeattachments"]
+    verbs      = ["get", "list", "watch"]
+  }
 }
 
 resource "kubernetes_cluster_role_binding" "provisioner" {
   metadata {
-    name = "ebs-csi-provisioner-binding"
+    name   = "ebs-csi-provisioner-binding"
+    labels = var.labels
   }
 
   role_ref {
@@ -89,7 +98,8 @@ resource "kubernetes_cluster_role_binding" "provisioner" {
 
 resource "kubernetes_cluster_role" "attacher" {
   metadata {
-    name = "ebs-external-attacher-role"
+    name   = "ebs-external-attacher-role"
+    labels = var.labels
   }
 
   rule {
@@ -125,7 +135,8 @@ resource "kubernetes_cluster_role" "attacher" {
 
 resource "kubernetes_cluster_role_binding" "attacher" {
   metadata {
-    name = "ebs-csi-attacher-binding"
+    name   = "ebs-csi-attacher-binding"
+    labels = var.labels
   }
 
   role_ref {
@@ -145,7 +156,8 @@ resource "kubernetes_cluster_role" "resizer" {
   count = var.enable_volume_resizing ? 1 : 0
 
   metadata {
-    name = "ebs-external-resizer-role"
+    name   = "ebs-external-resizer-role"
+    labels = var.labels
   }
 
   rule {
@@ -166,10 +178,11 @@ resource "kubernetes_cluster_role" "resizer" {
     verbs      = ["update", "patch"]
   }
 
+
   rule {
-    api_groups = [""]
-    resources  = ["pods"]
-    verbs      = ["get", "list", "watch"]
+    api_groups = ["storage.k8s.io"]
+    resources  = ["storageclasses"]
+    verbs      = ["list", "watch", "create", "update", "patch"]
   }
 
   rule {
@@ -177,13 +190,20 @@ resource "kubernetes_cluster_role" "resizer" {
     resources  = ["events"]
     verbs      = ["list", "watch", "create", "update", "patch"]
   }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods"]
+    verbs      = ["get", "list", "watch"]
+  }
 }
 
 resource "kubernetes_cluster_role_binding" "resizer" {
   count = var.enable_volume_resizing ? 1 : 0
 
   metadata {
-    name = "ebs-csi-resizer-binding"
+    name   = "ebs-csi-resizer-binding"
+    labels = var.labels
   }
 
   role_ref {
@@ -203,7 +223,8 @@ resource "kubernetes_cluster_role" "snapshotter" {
   count = var.enable_volume_snapshot ? 1 : 0
 
   metadata {
-    name = "ebs-external-snapshotter-role"
+    name   = "ebs-external-snapshotter-role"
+    labels = var.labels
   }
 
 
@@ -224,55 +245,14 @@ resource "kubernetes_cluster_role" "snapshotter" {
     resources  = ["volumesnapshotclasses"]
     verbs      = ["get", "list", "watch"]
   }
-
-  rule {
-    api_groups = [""]
-    resources  = ["secrets"]
-    verbs      = ["get", "list"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["events"]
-    verbs      = ["list", "watch", "create", "update", "patch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["persistentvolumes"]
-    verbs      = ["get", "list", "watch", "update", "patch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["persistentvolumeclaims"]
-    verbs      = ["get", "list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["persistentvolumeclaims/status"]
-    verbs      = ["update", "patch"]
-  }
-
-  rule {
-    api_groups = ["storage.k8s.io"]
-    resources  = ["storageclasses"]
-    verbs      = ["get", "list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["events"]
-    verbs      = ["list", "watch", "create", "update", "patch"]
-  }
 }
 
 resource "kubernetes_cluster_role_binding" "snapshotter" {
   count = var.enable_volume_snapshot ? 1 : 0
 
   metadata {
-    name = "ebs-csi-snapshotter-binding"
+    name   = "ebs-csi-snapshotter-binding"
+    labels = var.labels
   }
 
   role_ref {

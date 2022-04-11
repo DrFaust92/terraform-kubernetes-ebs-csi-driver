@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
       spec {
         node_selector = merge({
-          "beta.kubernetes.io/os" : "linux",
+          "kubernetes.io/os" : "linux",
         }, var.extra_node_selectors, var.controller_extra_node_selectors)
 
         service_account_name            = kubernetes_service_account.csi_driver.metadata[0].name
@@ -46,9 +46,10 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "amazon/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = compact(
             [
+              "controller",
               "--endpoint=$(CSI_ENDPOINT)",
               "--logtostderr",
               "--v=${tostring(var.log_level)}",
