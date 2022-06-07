@@ -1,6 +1,6 @@
 output "ebs_csi_driver_name" {
   description = "The Name of the EBS CSI driver"
-  value       = kubernetes_csi_driver.ebs.metadata[0].name
+  value       = kubernetes_csi_driver_v1.ebs.metadata[0].name
 }
 
 output "ebs_csi_driver_controller_role_arn" {

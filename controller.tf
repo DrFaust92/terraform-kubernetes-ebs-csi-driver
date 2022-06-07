@@ -3,6 +3,10 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
     name      = local.controller_name
     namespace = var.namespace
     labels    = var.labels
+    annotations = {
+      "prometheus.io/port"   = "8080"
+      "prometheus.io/scrape" = "false"
+    }
   }
   spec {
     replicas = var.csi_controller_replica_count
@@ -51,6 +55,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             [
               "controller",
               "--endpoint=$(CSI_ENDPOINT)",
+              "--http-endpoint=:8080",
               "--logtostderr",
               "--v=${tostring(var.log_level)}",
               length(local.csi_volume_tags) > 0 ? "--extra-tags=${local.csi_volume_tags}" : "",
@@ -215,6 +220,6 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
   depends_on = [
     kubernetes_cluster_role_binding.attacher,
     kubernetes_cluster_role_binding.provisioner,
-    kubernetes_csi_driver.ebs,
+    kubernetes_csi_driver_v1.ebs,
   ]
 }
