@@ -106,7 +106,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "k8s.gcr.io/sig-storage/csi-provisioner:v2.1.1"
+          image = "k8s.gcr.io/sig-storage/csi-provisioner:v2.2.2"
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
