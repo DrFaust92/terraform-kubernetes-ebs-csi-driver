@@ -171,6 +171,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             args = [
               "--csi-address=$(ADDRESS)",
               "--v=${tostring(var.log_level)}",
+              var.enable_volume_resizing == true ? "--handle-volume-inuse-error=false" : "",
             ]
 
             env {
