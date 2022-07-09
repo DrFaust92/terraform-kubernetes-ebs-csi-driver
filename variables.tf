@@ -137,6 +137,6 @@ variable "default_fstype" {
 
 variable "csi_provisioner_tag_version" {
   description = "The csi provisioner tag version"
-  default     = "v2.2.2"
+  default     = "v3.2.1"
   type        = string
 }

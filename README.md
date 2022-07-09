@@ -93,7 +93,7 @@ module "ebs_csi_driver_controller" {
 | <a name="input_controller_extra_node_selectors"></a> [controller\_extra\_node\_selectors](#input\_controller\_extra\_node\_selectors) | A map of extra node selectors for controller pods | `map(string)` | `{}` | no |
 | <a name="input_csi_controller_replica_count"></a> [csi\_controller\_replica\_count](#input\_csi\_controller\_replica\_count) | Number of EBS CSI driver controller pods | `number` | `2` | no |
 | <a name="input_csi_controller_tolerations"></a> [csi\_controller\_tolerations](#input\_csi\_controller\_tolerations) | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
-| <a name="input_csi_provisioner_tag_version"></a> [csi\_provisioner\_tag\_version](#input\_csi\_provisioner\_tag\_version) | The csi provisioner tag version | `string` | `"v2.2.2"` | no |
+| <a name="input_csi_provisioner_tag_version"></a> [csi\_provisioner\_tag\_version](#input\_csi\_provisioner\_tag\_version) | The csi provisioner tag version | `string` | `"v3.2.1"` | no |
 | <a name="input_default_fstype"></a> [default\_fstype](#input\_default\_fstype) | The default Filesystem type | `string` | `"ext4"` | no |
 | <a name="input_ebs_csi_controller_image"></a> [ebs\_csi\_controller\_image](#input\_ebs\_csi\_controller\_image) | The EBS CSI driver controller's image | `string` | `""` | no |
 | <a name="input_ebs_csi_controller_role_name"></a> [ebs\_csi\_controller\_role\_name](#input\_ebs\_csi\_controller\_role\_name) | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
