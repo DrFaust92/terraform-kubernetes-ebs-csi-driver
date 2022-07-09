@@ -51,7 +51,7 @@ resource "kubernetes_daemonset" "node" {
         host_network                    = true
         service_account_name            = kubernetes_service_account.node.metadata[0].name
         automount_service_account_token = true
-        priority_class_name             = "system-cluster-critical"
+        priority_class_name             = "system-node-critical"
 
         toleration {
           operator = "Exists"
