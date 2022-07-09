@@ -227,6 +227,11 @@ resource "kubernetes_cluster_role" "snapshotter" {
     labels = var.labels
   }
 
+  rule {
+    api_groups = [""]
+    resources  = ["events"]
+    verbs      = ["list", "watch", "create", "update", "patch"]
+  }
 
   rule {
     api_groups = ["snapshot.storage.k8s.io"]
@@ -237,7 +242,7 @@ resource "kubernetes_cluster_role" "snapshotter" {
   rule {
     api_groups = ["snapshot.storage.k8s.io"]
     resources  = ["volumesnapshotcontents"]
-    verbs      = ["create", "get", "list", "watch", "update", "delete"]
+    verbs      = ["create", "get", "list", "watch", "update", "delete", "patch"]
   }
 
   rule {

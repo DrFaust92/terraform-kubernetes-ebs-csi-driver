@@ -122,3 +122,21 @@ variable "additional_iam_policies_arns" {
   default     = []
   type        = list(string)
 }
+
+variable "enable_default_fstype" {
+  description = "Wheter to enable default Filesystem type"
+  default     = false
+  type        = bool
+}
+
+variable "default_fstype" {
+  description = "The default Filesystem type"
+  default     = "ext4"
+  type        = string
+}
+
+variable "csi_provisioner_tag_version" {
+  description = "The csi provisioner tag version"
+  default     = "v3.2.1"
+  type        = string
+}

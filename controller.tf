@@ -68,6 +68,26 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             value = "unix:///var/lib/csi/sockets/pluginproxy/csi.sock"
           }
 
+          env {
+            name = "CSI_NODE_NAME"
+            value_from {
+              field_ref {
+                field_path = "spec.nodeName"
+              }
+            }
+          }
+
+          env {
+            name = "AWS_EC2_ENDPOINT"
+            value_from {
+              config_map_key_ref {
+                name     = "aws-meta"
+                key      = "endpoint"
+                optional = true
+              }
+            }
+          }
+
           volume_mount {
             mount_path = "/var/lib/csi/sockets/pluginproxy/"
             name       = "socket-dir"
@@ -106,14 +126,15 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "k8s.gcr.io/sig-storage/csi-provisioner:v2.2.2"
+          image = "k8s.gcr.io/sig-storage/csi-provisioner:${var.csi_provisioner_tag_version}"
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
               "--v=${tostring(var.log_level)}",
               "--feature-gates=Topology=true",
-              "--leader-election",
-              var.extra_create_metadata ? "--extra-create-metadata" : ""
+              "--leader-electio==true",
+              var.extra_create_metadata ? "--extra-create-metadata" : "",
+              var.enable_default_fstype ? "--default-fstype=${var.default_fstype}" : "",
             ]
           )
 

@@ -55,14 +55,14 @@ module "ebs_csi_driver_controller" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.9.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.10.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.22.0 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.12.1 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ebs_controller_role"></a> [ebs\_controller\_role](#module\_ebs\_controller\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 4.18.0 |
+| <a name="module_ebs_controller_role"></a> [ebs\_controller\_role](#module\_ebs\_controller\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 4.24.1 |
 
 ## Resources
 
@@ -79,7 +79,7 @@ module "ebs_csi_driver_controller" {
 | [kubernetes_cluster_role_binding.provisioner](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cluster_role_binding) | resource |
 | [kubernetes_cluster_role_binding.resizer](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cluster_role_binding) | resource |
 | [kubernetes_cluster_role_binding.snapshotter](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cluster_role_binding) | resource |
-| [kubernetes_csi_driver.ebs](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/csi_driver) | resource |
+| [kubernetes_csi_driver_v1.ebs](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/csi_driver_v1) | resource |
 | [kubernetes_daemonset.node](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/daemonset) | resource |
 | [kubernetes_deployment.ebs_csi_controller](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) | resource |
 | [kubernetes_service_account.csi_driver](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) | resource |
@@ -93,11 +93,14 @@ module "ebs_csi_driver_controller" {
 | <a name="input_controller_extra_node_selectors"></a> [controller\_extra\_node\_selectors](#input\_controller\_extra\_node\_selectors) | A map of extra node selectors for controller pods | `map(string)` | `{}` | no |
 | <a name="input_csi_controller_replica_count"></a> [csi\_controller\_replica\_count](#input\_csi\_controller\_replica\_count) | Number of EBS CSI driver controller pods | `number` | `2` | no |
 | <a name="input_csi_controller_tolerations"></a> [csi\_controller\_tolerations](#input\_csi\_controller\_tolerations) | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
+| <a name="input_csi_provisioner_tag_version"></a> [csi\_provisioner\_tag\_version](#input\_csi\_provisioner\_tag\_version) | The csi provisioner tag version | `string` | `"v3.2.1"` | no |
+| <a name="input_default_fstype"></a> [default\_fstype](#input\_default\_fstype) | The default Filesystem type | `string` | `"ext4"` | no |
 | <a name="input_ebs_csi_controller_image"></a> [ebs\_csi\_controller\_image](#input\_ebs\_csi\_controller\_image) | The EBS CSI driver controller's image | `string` | `""` | no |
 | <a name="input_ebs_csi_controller_role_name"></a> [ebs\_csi\_controller\_role\_name](#input\_ebs\_csi\_controller\_role\_name) | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
 | <a name="input_ebs_csi_controller_role_policy_name_prefix"></a> [ebs\_csi\_controller\_role\_policy\_name\_prefix](#input\_ebs\_csi\_controller\_role\_policy\_name\_prefix) | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
 | <a name="input_ebs_csi_driver_version"></a> [ebs\_csi\_driver\_version](#input\_ebs\_csi\_driver\_version) | The EBS CSI driver controller's image version | `string` | `""` | no |
 | <a name="input_eks_cluster_id"></a> [eks\_cluster\_id](#input\_eks\_cluster\_id) | ID of the Kubernetes cluster used for tagging provisioned EBS volumes | `string` | `""` | no |
+| <a name="input_enable_default_fstype"></a> [enable\_default\_fstype](#input\_enable\_default\_fstype) | Wheter to enable default Filesystem type | `bool` | `false` | no |
 | <a name="input_enable_volume_resizing"></a> [enable\_volume\_resizing](#input\_enable\_volume\_resizing) | Whether to enable volume resizing | `bool` | `false` | no |
 | <a name="input_enable_volume_snapshot"></a> [enable\_volume\_snapshot](#input\_enable\_volume\_snapshot) | Whether to enable volume snapshotting | `bool` | `false` | no |
 | <a name="input_extra_create_metadata"></a> [extra\_create\_metadata](#input\_extra\_create\_metadata) | If set, add pv/pvc metadata to plugin create requests as parameters. | `bool` | `false` | no |
