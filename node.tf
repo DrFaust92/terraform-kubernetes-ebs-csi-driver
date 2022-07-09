@@ -89,6 +89,15 @@ resource "kubernetes_daemonset" "node" {
             value = "unix:/csi/csi.sock"
           }
 
+          env {
+            name = "CSI_NODE_NAME"
+            value_from {
+              field_ref {
+                field_path = "spec.nodeName"
+              }
+            }
+          }
+
           volume_mount {
             mount_path        = "/var/lib/kubelet"
             name              = "kubelet-dir"
