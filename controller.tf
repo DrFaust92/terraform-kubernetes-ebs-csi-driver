@@ -132,7 +132,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
               "--csi-address=$(ADDRESS)",
               "--v=${tostring(var.log_level)}",
               "--feature-gates=Topology=true",
-              "--leader-electio==true",
+              "--leader-election=true",
               var.extra_create_metadata ? "--extra-create-metadata" : "",
               var.enable_default_fstype ? "--default-fstype=${var.default_fstype}" : "",
             ]
