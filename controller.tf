@@ -33,12 +33,8 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
         automount_service_account_token = true
         priority_class_name             = "system-cluster-critical"
 
-        toleration {
-          operator = "Exists"
-        }
-
         dynamic "toleration" {
-          for_each = var.csi_controller_tolerations
+          for_each = length(var.csi_controller_tolerations) > 0 ? var.csi_controller_tolerations : [{ operator = "Exists" }]
           content {
             key                = lookup(toleration.value, "key", null)
             operator           = lookup(toleration.value, "operator", null)
