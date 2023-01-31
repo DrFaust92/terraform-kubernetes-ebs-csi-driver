@@ -1,4 +1,4 @@
-resource "kubernetes_csi_driver" "ebs" {
+resource "kubernetes_csi_driver_v1" "ebs" {
   metadata {
     name = "ebs.csi.aws.com"
   }
