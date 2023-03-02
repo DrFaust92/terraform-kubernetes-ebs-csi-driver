@@ -140,6 +140,11 @@ resource "kubernetes_daemonset" "node" {
             period_seconds        = 10
             failure_threshold     = 5
           }
+
+          resources {
+            requests = var.node_ebs_plugin_resources.requests
+            limits   = var.node_ebs_plugin_resources.limits
+          }
         }
 
         container {
@@ -178,6 +183,11 @@ resource "kubernetes_daemonset" "node" {
             mount_path = "/registration"
             name       = "registration-dir"
           }
+
+          resources {
+            requests = var.node_driver_registrar_resources.requests
+            limits   = var.node_driver_registrar_resources.limits
+          }
         }
 
         container {
@@ -190,6 +200,11 @@ resource "kubernetes_daemonset" "node" {
           volume_mount {
             mount_path = "/csi"
             name       = "plugin-dir"
+          }
+
+          resources {
+            requests = var.node_liveness_probe_resources.requests
+            limits   = var.node_liveness_probe_resources.limits
           }
         }
 
