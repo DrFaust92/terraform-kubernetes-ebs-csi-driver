@@ -118,6 +118,11 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             period_seconds        = 10
             failure_threshold     = 5
           }
+
+          resources {
+            requests = var.controller_ebs_plugin_resources.requests
+            limits   = var.controller_ebs_plugin_resources.limits
+          }
         }
 
         container {
@@ -142,6 +147,11 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
           volume_mount {
             mount_path = "/var/lib/csi/sockets/pluginproxy/"
             name       = "socket-dir"
+          }
+
+          resources {
+            requests = var.controller_csi_provisioner_resources.requests
+            limits   = var.controller_csi_provisioner_resources.limits
           }
         }
 
@@ -176,6 +186,11 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             mount_path = "/csi"
             name       = "socket-dir"
           }
+
+          resources {
+            requests = var.controller_csi_attacher_resources.requests
+            limits   = var.controller_csi_attacher_resources.limits
+          }
         }
 
         dynamic "container" {
@@ -200,6 +215,11 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
               mount_path = "/var/lib/csi/sockets/pluginproxy/"
               name       = "socket-dir"
             }
+
+            resources {
+              requests = var.controller_csi_resizer_resources.requests
+              limits   = var.controller_csi_resizer_resources.limits
+            }
           }
         }
 
@@ -223,6 +243,11 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
             volume_mount {
               mount_path = "/var/lib/csi/sockets/pluginproxy/"
               name       = "socket-dir"
+            }
+
+            resources {
+              requests = var.controller_csi_snapshotter_resources.requests
+              limits   = var.controller_csi_snapshotter_resources.limits
             }
           }
         }

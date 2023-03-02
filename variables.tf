@@ -140,3 +140,99 @@ variable "csi_provisioner_tag_version" {
   default     = "v3.2.1"
   type        = string
 }
+
+variable "controller_csi_attacher_resources" {
+  description = "The controller csi attacher resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "controller_csi_provisioner_resources" {
+  description = "The controller csi provisioner resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "controller_csi_resizer_resources" {
+  description = "The controller csi resizer resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "controller_csi_snapshotter_resources" {
+  description = "The controller csi snapshotter resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "controller_ebs_plugin_resources" {
+  description = "The controller ebs plugin resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "node_driver_registrar_resources" {
+  description = "The node driver registrar resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "node_ebs_plugin_resources" {
+  description = "The node ebs plugin resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
+
+variable "node_liveness_probe_resources" {
+  description = "The node liveness probe resources"
+  default = {
+    requests = {}
+    limits   = {}
+  }
+  type = object({
+    requests = map(string)
+    limits   = map(string)
+  })
+}
