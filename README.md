@@ -100,7 +100,7 @@ module "ebs_csi_driver_controller" {
 | <a name="input_csi_controller_tolerations"></a> [csi\_controller\_tolerations](#input\_csi\_controller\_tolerations) | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
 | <a name="input_csi_provisioner_tag_version"></a> [csi\_provisioner\_tag\_version](#input\_csi\_provisioner\_tag\_version) | The csi provisioner tag version | `string` | `"v3.2.1"` | no |
 | <a name="input_default_fstype"></a> [default\_fstype](#input\_default\_fstype) | The default Filesystem type | `string` | `"ext4"` | no |
-| <a name="input_ebs_csi_controller_image"></a> [ebs\_csi\_controller\_image](#input\_ebs\_csi\_controller\_image) | The EBS CSI driver controller's image | `string` | `""` | no |
+| <a name="input_ebs_csi_controller_image"></a> [ebs\_csi\_controller\_image](#input\_ebs\_csi\_controller\_image) | The EBS CSI driver controller's image | `string` | `"k8s.gcr.io/provider-aws/aws-ebs-csi-driver"` | no |
 | <a name="input_ebs_csi_controller_role_name"></a> [ebs\_csi\_controller\_role\_name](#input\_ebs\_csi\_controller\_role\_name) | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
 | <a name="input_ebs_csi_controller_role_policy_name_prefix"></a> [ebs\_csi\_controller\_role\_policy\_name\_prefix](#input\_ebs\_csi\_controller\_role\_policy\_name\_prefix) | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
 | <a name="input_ebs_csi_driver_version"></a> [ebs\_csi\_driver\_version](#input\_ebs\_csi\_driver\_version) | The EBS CSI driver controller's image version | `string` | `""` | no |

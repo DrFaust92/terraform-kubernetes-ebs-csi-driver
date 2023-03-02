@@ -18,7 +18,7 @@ variable "ebs_csi_driver_version" {
 
 variable "ebs_csi_controller_image" {
   description = "The EBS CSI driver controller's image"
-  default     = ""
+  default     = "k8s.gcr.io/provider-aws/aws-ebs-csi-driver"
   type        = string
 }
 

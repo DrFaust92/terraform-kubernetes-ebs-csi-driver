@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = compact(
             [
               "controller",
