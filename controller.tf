@@ -157,7 +157,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-attacher"
-          image = "k8s.gcr.io/sig-storage/csi-attacher:v3.5.1"
+          image = "registry.k8s.io/sig-storage/csi-attacher:v3.5.1"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=${tostring(var.log_level)}",
