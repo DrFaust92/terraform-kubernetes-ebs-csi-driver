@@ -127,7 +127,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "k8s.gcr.io/sig-storage/csi-provisioner:${var.csi_provisioner_tag_version}"
+          image = "registry.k8s.io/sig-storage/csi-provisioner:${var.csi_provisioner_tag_version}"
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
@@ -177,7 +177,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "liveness-probe"
-          image = "k8s.gcr.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
+          image = "registry.k8s.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]
