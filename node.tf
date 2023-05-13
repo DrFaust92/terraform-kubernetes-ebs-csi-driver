@@ -66,7 +66,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "k8s.gcr.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${var.ebs_csi_controller_image == "" ? "registry.k8s.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = flatten([
             "node",
             "--http-endpoint=:8080",
@@ -192,7 +192,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "liveness-probe"
-          image = "k8s.gcr.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
+          image = "registry.k8s.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]

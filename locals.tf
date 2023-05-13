@@ -7,11 +7,11 @@ locals {
 
   resizer_container = var.enable_volume_resizing ? [{
     name  = "csi-resizer",
-    image = "k8s.gcr.io/sig-storage/csi-resizer:v1.4.0"
+    image = "registry.k8s.io/sig-storage/csi-resizer:v1.4.0"
   }] : []
 
   snapshot_container = var.enable_volume_snapshot ? [{
     name  = "csi-snapshotter",
-    image = "k8s.gcr.io/sig-storage/csi-snapshotter:v6.0.1"
+    image = "registry.k8s.io/sig-storage/csi-snapshotter:v6.0.1"
   }] : []
 }
