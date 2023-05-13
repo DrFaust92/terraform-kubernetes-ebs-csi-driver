@@ -149,7 +149,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "node-driver-registrar"
-          image = "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.7.0"
+          image = "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0"
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
