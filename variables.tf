@@ -189,6 +189,12 @@ variable "controller_csi_snapshotter_resources" {
   })
 }
 
+variable "arn_format" {
+  type        = string
+  default     = "aws"
+  description = "ARNs identifier, usefull for GovCloud begin with `aws-us-gov`"
+}
+
 variable "controller_ebs_plugin_resources" {
   description = "The controller ebs plugin resources"
   default = {
