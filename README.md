@@ -35,7 +35,6 @@ module "ebs_csi_driver_controller" {
   source = "DrFaust92/ebs-csi-driver/kubernetes"
   version = "<VERSION>"
 
-  ebs_csi_controller_image                   = ""
   ebs_csi_controller_role_name               = "ebs-csi-driver-controller"
   ebs_csi_controller_role_policy_name_prefix = "ebs-csi-driver-policy"
   oidc_url                                   = aws_iam_openid_connect_provider.openid_connect.url
@@ -96,14 +95,23 @@ module "ebs_csi_driver_controller" {
 | <a name="input_controller_csi_snapshotter_resources"></a> [controller\_csi\_snapshotter\_resources](#input\_controller\_csi\_snapshotter\_resources) | The controller csi snapshotter resources | <pre>object({<br>    requests = map(string)<br>    limits   = map(string)<br>  })</pre> | <pre>{<br>  "limits": {},<br>  "requests": {}<br>}</pre> | no |
 | <a name="input_controller_ebs_plugin_resources"></a> [controller\_ebs\_plugin\_resources](#input\_controller\_ebs\_plugin\_resources) | The controller ebs plugin resources | <pre>object({<br>    requests = map(string)<br>    limits   = map(string)<br>  })</pre> | <pre>{<br>  "limits": {},<br>  "requests": {}<br>}</pre> | no |
 | <a name="input_controller_extra_node_selectors"></a> [controller\_extra\_node\_selectors](#input\_controller\_extra\_node\_selectors) | A map of extra node selectors for controller pods | `map(string)` | `{}` | no |
+| <a name="input_csi_attacher_image"></a> [csi\_attacher\_image](#input\_csi\_attacher\_image) | The CSI attacher image | `string` | `"registry.k8s.io/sig-storage/csi-attacher"` | no |
+| <a name="input_csi_attacher_version"></a> [csi\_attacher\_version](#input\_csi\_attacher\_version) | The CSI attacher image version | `string` | `"v3.5.1"` | no |
 | <a name="input_csi_controller_replica_count"></a> [csi\_controller\_replica\_count](#input\_csi\_controller\_replica\_count) | Number of EBS CSI driver controller pods | `number` | `2` | no |
 | <a name="input_csi_controller_tolerations"></a> [csi\_controller\_tolerations](#input\_csi\_controller\_tolerations) | CSI driver controller tolerations | `list(map(string))` | `[]` | no |
-| <a name="input_csi_provisioner_tag_version"></a> [csi\_provisioner\_tag\_version](#input\_csi\_provisioner\_tag\_version) | The csi provisioner tag version | `string` | `"v3.2.1"` | no |
+| <a name="input_csi_node_driver_registrar_image"></a> [csi\_node\_driver\_registrar\_image](#input\_csi\_node\_driver\_registrar\_image) | The CSI node driver registrar image | `string` | `"registry.k8s.io/sig-storage/csi-node-driver-registrar"` | no |
+| <a name="input_csi_node_driver_registrar_version"></a> [csi\_node\_driver\_registrar\_version](#input\_csi\_node\_driver\_registrar\_version) | The CSI node driver registrar image version | `string` | `"v2.9.0"` | no |
+| <a name="input_csi_provisioner_image"></a> [csi\_provisioner\_image](#input\_csi\_provisioner\_image) | The CSI provisioner image | `string` | `"registry.k8s.io/sig-storage/csi-provisioner"` | no |
+| <a name="input_csi_provisioner_tag_version"></a> [csi\_provisioner\_tag\_version](#input\_csi\_provisioner\_tag\_version) | The CSI provisioner tag version | `string` | `"v3.2.1"` | no |
+| <a name="input_csi_resizer_image"></a> [csi\_resizer\_image](#input\_csi\_resizer\_image) | The CSI resizer image | `string` | `"registry.k8s.io/sig-storage/csi-resizer"` | no |
+| <a name="input_csi_resizer_version"></a> [csi\_resizer\_version](#input\_csi\_resizer\_version) | The CSI resizer image version | `string` | `"v1.4.0"` | no |
+| <a name="input_csi_snapshotter_image"></a> [csi\_snapshotter\_image](#input\_csi\_snapshotter\_image) | The CSI snapshotter image | `string` | `"registry.k8s.io/sig-storage/csi-snapshotter"` | no |
+| <a name="input_csi_snapshotter_version"></a> [csi\_snapshotter\_version](#input\_csi\_snapshotter\_version) | The CSI snapshotter image version | `string` | `"v6.0.1"` | no |
 | <a name="input_default_fstype"></a> [default\_fstype](#input\_default\_fstype) | The default Filesystem type | `string` | `"ext4"` | no |
 | <a name="input_ebs_csi_controller_image"></a> [ebs\_csi\_controller\_image](#input\_ebs\_csi\_controller\_image) | The EBS CSI driver controller's image | `string` | `"k8s.gcr.io/provider-aws/aws-ebs-csi-driver"` | no |
 | <a name="input_ebs_csi_controller_role_name"></a> [ebs\_csi\_controller\_role\_name](#input\_ebs\_csi\_controller\_role\_name) | The name of the EBS CSI driver IAM role | `string` | `"ebs-csi-driver-controller"` | no |
 | <a name="input_ebs_csi_controller_role_policy_name_prefix"></a> [ebs\_csi\_controller\_role\_policy\_name\_prefix](#input\_ebs\_csi\_controller\_role\_policy\_name\_prefix) | The prefix of the EBS CSI driver IAM policy | `string` | `"ebs-csi-driver-policy"` | no |
-| <a name="input_ebs_csi_driver_version"></a> [ebs\_csi\_driver\_version](#input\_ebs\_csi\_driver\_version) | The EBS CSI driver controller's image version | `string` | `""` | no |
+| <a name="input_ebs_csi_driver_version"></a> [ebs\_csi\_driver\_version](#input\_ebs\_csi\_driver\_version) | The EBS CSI driver controller's image version | `string` | `"v1.6.2"` | no |
 | <a name="input_eks_cluster_id"></a> [eks\_cluster\_id](#input\_eks\_cluster\_id) | ID of the Kubernetes cluster used for tagging provisioned EBS volumes | `string` | `""` | no |
 | <a name="input_enable_default_fstype"></a> [enable\_default\_fstype](#input\_enable\_default\_fstype) | Wheter to enable default Filesystem type | `bool` | `false` | no |
 | <a name="input_enable_volume_resizing"></a> [enable\_volume\_resizing](#input\_enable\_volume\_resizing) | Whether to enable volume resizing | `bool` | `false` | no |
@@ -111,6 +119,8 @@ module "ebs_csi_driver_controller" {
 | <a name="input_extra_create_metadata"></a> [extra\_create\_metadata](#input\_extra\_create\_metadata) | If set, add pv/pvc metadata to plugin create requests as parameters. | `bool` | `false` | no |
 | <a name="input_extra_node_selectors"></a> [extra\_node\_selectors](#input\_extra\_node\_selectors) | A map of extra node selectors for all components | `map(string)` | `{}` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A map of extra labels for all resources | `map(string)` | `{}` | no |
+| <a name="input_liveness_probe_image"></a> [liveness\_probe\_image](#input\_liveness\_probe\_image) | The liveness probe image | `string` | `"registry.k8s.io/sig-storage/livenessprobe"` | no |
+| <a name="input_liveness_probe_version"></a> [liveness\_probe\_version](#input\_liveness\_probe\_version) | The liveness probe image version | `string` | `"v2.5.0"` | no |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | The log level for the CSI Driver controller | `number` | `5` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The K8s namespace for all EBS CSI driver resources | `string` | `"kube-system"` | no |
 | <a name="input_node_driver_registrar_resources"></a> [node\_driver\_registrar\_resources](#input\_node\_driver\_registrar\_resources) | The node driver registrar resources | <pre>object({<br>    requests = map(string)<br>    limits   = map(string)<br>  })</pre> | <pre>{<br>  "limits": {},<br>  "requests": {}<br>}</pre> | no |

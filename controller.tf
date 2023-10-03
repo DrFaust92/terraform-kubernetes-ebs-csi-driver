@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${local.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = compact(
             [
               "controller",
@@ -127,7 +127,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-provisioner"
-          image = "registry.k8s.io/sig-storage/csi-provisioner:${var.csi_provisioner_tag_version}"
+          image = "${var.csi_provisioner_image}:${var.csi_provisioner_tag_version}"
           args = compact(
             [
               "--csi-address=$(ADDRESS)",
@@ -157,7 +157,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "csi-attacher"
-          image = "registry.k8s.io/sig-storage/csi-attacher:v3.5.1"
+          image = "${var.csi_attacher_image}:${var.csi_attacher_version}"
           args = [
             "--csi-address=$(ADDRESS)",
             "--v=${tostring(var.log_level)}",
@@ -177,7 +177,7 @@ resource "kubernetes_deployment" "ebs_csi_controller" {
 
         container {
           name  = "liveness-probe"
-          image = "registry.k8s.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
+          image = "${var.liveness_probe_image}:${var.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]

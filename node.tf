@@ -66,7 +66,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "ebs-plugin"
-          image = "${var.ebs_csi_controller_image == "" ? "registry.k8s.io/provider-aws/aws-ebs-csi-driver" : var.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
+          image = "${local.ebs_csi_controller_image}:${local.ebs_csi_driver_version}"
           args = flatten([
             "node",
             "--http-endpoint=:8080",
@@ -149,7 +149,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "node-driver-registrar"
-          image = "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.0"
+          image = "${var.csi_node_driver_registrar_image}:${var.csi_node_driver_registrar_version}"
           args = [
             "--csi-address=$(ADDRESS)",
             "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)",
@@ -192,7 +192,7 @@ resource "kubernetes_daemonset" "node" {
 
         container {
           name  = "liveness-probe"
-          image = "registry.k8s.io/sig-storage/livenessprobe:${local.liveness_probe_version}"
+          image = "${var.liveness_probe_image}:${var.liveness_probe_version}"
           args = [
             "--csi-address=/csi/csi.sock"
           ]
