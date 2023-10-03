@@ -10,15 +10,89 @@ variable "ebs_csi_controller_role_policy_name_prefix" {
   type        = string
 }
 
+# for backwards compatibility see locals.tf
 variable "ebs_csi_driver_version" {
   description = "The EBS CSI driver controller's image version"
-  default     = ""
+  default     = "v1.6.2"
   type        = string
 }
 
+# for backwards compatibility see locals.tf
 variable "ebs_csi_controller_image" {
   description = "The EBS CSI driver controller's image"
   default     = "registry.k8s.io/provider-aws/aws-ebs-csi-driver"
+  type        = string
+}
+
+variable "csi_node_driver_registrar_version" {
+  description = "The CSI node driver registrar image version"
+  default     = "v2.9.0"
+  type        = string
+}
+
+variable "csi_node_driver_registrar_image" {
+  description = "The CSI node driver registrar image"
+  default     = "registry.k8s.io/sig-storage/csi-node-driver-registrar"
+  type        = string
+}
+
+variable "csi_attacher_version" {
+  description = "The CSI attacher image version"
+  default     = "v3.5.1"
+  type        = string
+}
+
+variable "csi_attacher_image" {
+  description = "The CSI attacher image"
+  default     = "registry.k8s.io/sig-storage/csi-attacher"
+  type        = string
+}
+
+variable "csi_provisioner_tag_version" {
+  description = "The csi provisioner tag version"
+  default     = "v3.2.1"
+  type        = string
+}
+
+variable "csi_provisioner_image" {
+  description = "The CSI provisioner image"
+  default     = "registry.k8s.io/sig-storage/csi-provisioner"
+  type        = string
+}
+
+variable "csi_resizer_version" {
+  description = "The CSI resizer image version"
+  default     = "v1.4.0"
+  type        = string
+}
+
+variable "csi_resizer_image" {
+  description = "The CSI resizer image"
+  default     = "registry.k8s.io/sig-storage/csi-resizer"
+  type        = string
+}
+
+variable "csi_snapshotter_version" {
+  description = "The CSI snapshotter image version"
+  default     = "v6.0.1"
+  type        = string
+}
+
+variable "csi_snapshotter_image" {
+  description = "The CSI snapshotter image"
+  default     = "registry.k8s.io/sig-storage/csi-snapshotter"
+  type        = string
+}
+
+variable "liveness_probe_version" {
+  description = "The liveness probe image version"
+  default     = "v2.5.0"
+  type        = string
+}
+
+variable "liveness_probe_image" {
+  description = "The liveness probes image"
+  default     = "registry.k8s.io/sig-storage/livenessprobe"
   type        = string
 }
 
@@ -132,12 +206,6 @@ variable "enable_default_fstype" {
 variable "default_fstype" {
   description = "The default Filesystem type"
   default     = "ext4"
-  type        = string
-}
-
-variable "csi_provisioner_tag_version" {
-  description = "The csi provisioner tag version"
-  default     = "v3.2.1"
   type        = string
 }
 
