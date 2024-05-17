@@ -54,7 +54,7 @@ resource "kubernetes_daemonset" "node" {
         priority_class_name             = "system-node-critical"
 
         dynamic "toleration" {
-          for_each = length(var.node_tolerations) > 0 ? var.csi_controller_tolerations : [{ operator = "Exists" }]
+          for_each = var.node_tolerations
           content {
             key                = lookup(toleration.value, "key", null)
             operator           = lookup(toleration.value, "operator", null)

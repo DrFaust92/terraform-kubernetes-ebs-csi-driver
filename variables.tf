@@ -128,7 +128,7 @@ variable "oidc_url" {
 variable "node_tolerations" {
   description = "CSI driver node tolerations"
   type        = list(map(string))
-  default     = []
+  default     = [{ operator = "Exists" }]
 }
 
 variable "csi_controller_tolerations" {
