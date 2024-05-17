@@ -76,6 +76,17 @@ resource "kubernetes_daemonset" "node" {
             var.volume_attach_limit == -1 ? [] : ["--volume-attach-limit=${var.volume_attach_limit}"]
           ])
 
+          dynamic "lifecycle" {
+            for_each = var.ebs_csi_plugin_pre_stop_command != null ? [1] : []
+            content {
+              pre_stop {
+                exec {
+                  command = var.ebs_csi_plugin_pre_stop_command
+                }
+              }
+            }
+          }
+
           security_context {
             privileged = true
           }
@@ -156,10 +167,13 @@ resource "kubernetes_daemonset" "node" {
             "--v=${tostring(var.log_level)}",
           ]
 
-          lifecycle {
-            pre_stop {
-              exec {
-                command = ["/bin/sh", "-c", "rm -rf /registration/ebs.csi.aws.com-reg.sock /csi/csi.sock"]
+          dynamic "lifecycle" {
+            for_each = var.ebs_csi_registrar_pre_stop_command != null ? [1] : []
+            content {
+              pre_stop {
+                exec {
+                  command = var.ebs_csi_registrar_pre_stop_command
+                }
               }
             }
           }
