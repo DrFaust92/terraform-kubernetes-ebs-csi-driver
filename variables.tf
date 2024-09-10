@@ -24,6 +24,12 @@ variable "ebs_csi_controller_image" {
   type        = string
 }
 
+variable "ebs_csi_plugin_pre_stop_command" {
+  type = list(string)
+  default = ["/bin/aws-ebs-csi-driver", "pre-stop-hook"]
+  description = "The pre-stop command for the EBS CSI driver plugin container"
+}
+
 variable "csi_node_driver_registrar_version" {
   description = "The CSI node driver registrar image version"
   default     = "v2.9.0"
@@ -34,6 +40,12 @@ variable "csi_node_driver_registrar_image" {
   description = "The CSI node driver registrar image"
   default     = "registry.k8s.io/sig-storage/csi-node-driver-registrar"
   type        = string
+}
+
+variable "ebs_csi_registrar_pre_stop_command" {
+  type = list(string)
+  default = null
+  description = "The pre-stop command for the EBS CSI driver registrar container"
 }
 
 variable "csi_attacher_version" {
@@ -116,7 +128,7 @@ variable "oidc_url" {
 variable "node_tolerations" {
   description = "CSI driver node tolerations"
   type        = list(map(string))
-  default     = []
+  default     = [{ operator = "Exists" }]
 }
 
 variable "csi_controller_tolerations" {

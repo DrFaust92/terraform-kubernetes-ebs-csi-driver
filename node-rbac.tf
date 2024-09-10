@@ -16,6 +16,18 @@ resource "kubernetes_cluster_role" "node" {
   rule {
     api_groups = [""]
     resources  = ["nodes"]
+    verbs      = ["get", "patch"]
+  }
+
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["volumeattachments"]
+    verbs      = ["get", "list", "watch"]
+  }
+
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["csinodes"]
     verbs      = ["get"]
   }
 }
