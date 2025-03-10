@@ -17,6 +17,17 @@ data "aws_iam_policy_document" "ebs_controller_policy" {
     ]
   }
 
+  # https://github.com/kubernetes-sigs/aws-ebs-csi-driver/issues/2190
+  statement {
+    effect = "Allow"
+
+    resources = [
+      "arn:${var.arn_format}:ec2:*:*:snapshot/*",
+    ]
+
+    actions = ["ec2:CreateVolume"]
+  }
+
   statement {
     effect = "Allow"
 
